@@ -1,4 +1,4 @@
-import {BOOKS_PER_PAGE, genres, books } from "./data.js";
+import {BOOKS_PER_PAGE, genres, books, authors } from "./data.js";
 import * as Module from "./elements.js"
 // const matches = books
 let  page = 1;
@@ -45,34 +45,38 @@ for (const { author, image, title, id } of extracted) {
 const genresFragment = document.createDocumentFragment()
 const genresOption = document.createElement('option')
 genresOption.value = 'any'
-const element = 'All Genres'
+genresOption.innerText = 'All Genres'
 //genresOption.appendChild(element) 
 genresFragment.appendChild(genresOption)
- console.log(genresFragment)
+ 
+let optionRand =` option${Math.ceil(Math.random() * Object.entries(genres).length)}`
 
-for ([id, name]; Object.entries(genres); i++) {
-    document.createElement('option')
-    element.value = value
-    element.innerText = text
-    genres.appendChild(element)
+for (const [id, name] of Object.entries(genres)) {
+    optionRand =document.createElement('option')
+    optionRand.value = name
+    optionRand.innerText = name
+    genresOption.appendChild(optionRand)
+    genresFragment.appendChild(genresOption)
+    
 }
 
-// searchGenre.appendChild(genres)
+Module.searchGenre.appendChild(genresFragment)
 
-// authors = document.createDocumentFragment()
-// element = document.createElement('option')
-// element.value = 'any'
-// element.innerText = 'All Authors'
-// authors.appendChild(element)
+ const authorsFragment = document.createDocumentFragment()
+ const authorOptn = document.createElement('option')
+authorOptn.value = 'any'
+authorOptn.innerText = 'All Authors'
+authorsFragment.appendChild(authorOptn)
 
-// for ([id, name];Object.entries(authors); id++) {
-//     document.createElement('option')
-//     element.value = value
-//     element = text
-//     authors.appendChild(element)
-// }
+for (const [id, name] of Object.entries(authors)) {
+    const authorRandom =document.createElement('option')
+    authorRandom.value = id
+    authorRandom.innerText = name
+    authorOptn.appendChild(authorRandom)
+   
+}
 
-// searchAuthor.appendChild(authors)
+ Module.searchAuthor.appendChild(authorsFragment)
 
 // Module.settingTheme.value === window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'night' : 'day'
 // v = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches? 'night' | 'day'
