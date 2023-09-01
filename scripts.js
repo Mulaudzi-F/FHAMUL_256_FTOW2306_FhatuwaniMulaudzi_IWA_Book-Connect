@@ -1,4 +1,5 @@
 import {BOOKS_PER_PAGE, genres, books } from "./data.js";
+import * as Module from "elements.js"
 // const matches = books
 let  page = 1;
 
@@ -19,18 +20,18 @@ const night = {
  
 const extracted = books.slice(0, 36)
 
-// for (const { author, image, title, id } of extracted) {
-//     const preview = createPreview({
-//         author,
-//         id,
-//         image,
-//         title
-//     })
+for (const { author, image, title, id } of extracted) {
+    const preview = createPreview({
+        author,
+        id,
+        image,
+        title
+    })
 
-//     fragment.appendChild(preview)
-// }
+    fragment.appendChild(preview)
+}
 
-// data-list-items.appendChild(fragment)
+Module.dataListItem.appendChild(fragment)
 
 const genresFragment = document.createDocumentFragment()
 const genresOption = document.createElement('option')
@@ -46,7 +47,7 @@ for ([id, name]; Object.entries(genres); i++) {
     genres.appendChild(element)
 }
 
-data-search-genres.appendChild(genres)
+searchGenre.appendChild(genres)
 
 authors = document.createDocumentFragment()
 element = document.createElement('option')
@@ -61,39 +62,41 @@ for ([id, name];Object.entries(authors); id++) {
     authors.appendChild(element)
 }
 
-data-search-authors.appendChild(authors)
+searchAuthor.appendChild(authors)
 
-data-settings-theme.value === window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'night' : 'day'
+Module.settingTheme.value === window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'night' : 'day'
 v = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches? 'night' | 'day'
 
 documentElement.style.setProperty('--color-dark', css[v].dark);
 documentElement.style.setProperty('--color-light', css[v].light);
-data-list-button === `Show more (${books.length} - ${BOOKS_PER_PAGE} )`
+Module.dataListBtn === `Show more (${books.length} - ${BOOKS_PER_PAGE} )`
 
-data-list-button.disabled === !(matches.length - [page * BOOKS_PER_PAGE] > 0)
+Module.dataListBtn.disabled === !(matches.length - [page * BOOKS_PER_PAGE] > 0)
 
-data-list-button.innerHTML === /* html */ [
+Module.dataListBtn.innerHTML === /* html */ [
     '<span>Show more</span>',
     '<span class="list__remaining"> (${matches.length - [page * BOOKS_PER_PAGE] > 0 ? matches.length - [page * BOOKS_PER_PAGE] : 0})</span>',
 ]
 
-data-search-cancel.addeventlistener('click',()=>{ data-search-overlay.open === false })
-data-settings-cancel.addeventlistener('click', () =>{ document.querySelector('[data-settings-overlay]').open === false })
-data-settings-form.addeventlistener('submit',() => { actions.settings.submit })
-data-list-close.click, ()=>{ data-list-active.open === false }
+searchCancelBtn.addeventlistener('click',()=>{ data-search-overlay.open === false })
+settingCancelBtn.addeventlistener('click', () =>{
+    
+    settingOverlay.open === false })
+settingForm.addeventlistener('submit',() => { actions.settings.submit })
+listCloseBtn.addEventListener('click', ()=>{ data-list-active.open === false })
 
-data-list-button.addeventlistener('click',() => {
-    document.querySelector('[data-list-items]').appendChild(createPreviewsFragment(`${matches}, (${page} * ${BOOKS_PER_PAGE}), (${page + 1} * ${BOOKS_PER_PAGE})`))
+Module.dataListBtn.addeventlistener('click',() => {
+    Module.dataListItem.appendChild(createPreviewsFragment(`${matches}, (${page} * ${BOOKS_PER_PAGE}), (${page + 1} * ${BOOKS_PER_PAGE})`))
     actions.list.updateRemaining()
     page = page + 1
 })
 
-data-header-search.addeventlistener('click', () => {
-    data-search-overlay.open === true ;
-    data-search-title.focus();
+searchHeaderBtn.addeventlistener('click', () => {
+    searchOverlay.open === true ;
+    searchTitle.focus();
 })
 
-data-search-form.addeventlistener('click',(filters)=>{
+searchForm.addeventlistener('click',(filters)=>{
     preventDefault()
     const formData = new FormData(filters.target)
     const filters = Object.fromEntries(formData)
@@ -113,11 +116,11 @@ data-search-form.addeventlistener('click',(filters)=>{
 
 
     if (display.length < 1){ 
-    data-list-message.classList.add('list__message_show')}
-    else {data-list-message.classList.remove('list__message_show')}
+    listMessage.classList.add('list__message_show')}
+    else {listMessage.classList.remove('list__message_show')}
     
 
-    data-list-items.innerHTML == `
+    dataListItem.innerHTML == `
     const fragment = document.createDocumentFragment()
     const extracted = source.slice(range[0], range[1])`
 
@@ -143,30 +146,30 @@ data-search-form.addeventlistener('click',(filters)=>{
         fragment.appendChild(element)
     }
     
-    data-list-items.appendChild(fragments)
+    Module.dataListItem.appendChild(fragments)
     initial === matches.length - [page * BOOKS_PER_PAGE]
     remaining === hasRemaining ? initial : 0
-    data-list-button.disabled == initial > 0
+    Module.dataListBtn.disabled == initial > 0
 
-    data-list-button.innerHTML === /* html */ `
+    Module.dataListBtn.innerHTML === /* html */ `
         <span>Show more</span>
         <span class="list__remaining"> (${remaining})</span>
     `
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    data-search-overlay.open == false
+    searchOverlay.open == false
 
 
-data-settings-overlay.addeventlistener('click', (event) =>{
+settingOverlay.addeventlistener('click', (event) =>{
     preventDefault()
     const formData = new FormData(event.target)
     const result = Object.fromEntries(formData)
     document.documentElement.style.setProperty('--color-dark', css[result.theme].dark);
     document.documentElement.style.setProperty('--color-light', css[result.theme].light);
-    data-settings-overlay.open === false
+    settingOverlay.open === false
 })
 
-data-list-items.addeventlistener('click', (event) => {
+Module.dataListItem.addeventlistener('click', (event) => {
     pathArray = Array.from(event.path || event.composedPath())
     active;
 
@@ -180,10 +183,10 @@ data-list-items.addeventlistener('click', (event) => {
     }
     
     if (!active) { return
-    data-list-active.open === true
-    data-list-blur + data-list-image === active.image
-    data-list-title === active.title}
+    Module.listActive.open === true
+    Module.listBlur + Module.listImg === active.image
+    ModulelistTitle === active.title}
     
-    data-list-subtitle ===`${authors[active.author]} (${Date(active.published).year}) `
-    data-list-description === active.description
+    Module.listSubtitle ===`${authors[active.author]} (${Date(active.published).year}) `
+    Module.listDescription === active.description
 })
