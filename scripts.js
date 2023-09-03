@@ -26,9 +26,20 @@ const night = {
  
 const extracted = books.slice(0, 36)
 
-const createPreview = (theObj) =>{
+const createPreview = (author, id, image, title) =>{
+    let element = document.createElement('button');
+    element.classList = 'preview';
+    element.setAttribute('id', 'data-preview') 
+    element.innerHTML = /* html */ `
+    <img class='preview_image'
+    src="${image}"
+     />
+     
+     <div class="preview__info">
+     <h3 class="preview__title>${title}<h3>
+     <div class="preview__author">${author[author]}</div>
+     <div>`
 
-    return theObj
 }
 
 
@@ -204,7 +215,7 @@ Module.searchCancelBtn.addEventListener('click',()=>{ Module.searchOverlay.style
 
 
    const initial =matches.length - [page * BOOKS_PER_PAGE]
-  // const  remaining =` hasRemaining ${ ? initial : 0} `
+ // const  remaining = hasRemaining ? initial : 0
     Module.dataListBtn.disabled = initial > 0
 
 const booksBtns = document.querySelectorAll('#data-preview'); 
@@ -216,6 +227,8 @@ for(const bookbtn of booksBtns){
    const titlePrv = document.querySelector('.preview__title');
    const authorPrv = document.querySelector('.preview__author')
    bookbtn.addEventListener('click', () =>{
+    const pathArray = Array.from(event.path || event.composedPath());
+    console.log(pathArray)
        for (const prevImg of prevImgages){
      
        
@@ -231,9 +244,9 @@ for(const bookbtn of booksBtns){
     })
 }
 
-Module.listCloseBtn.addEventListener('click', () =>{
-    Module.listActive.close()
-})
+// Module.listCloseBtn.addEventListener('click', () =>{
+//     Module.listActive.close()
+// })
 //     Module.dataListBtn.innerHTML === /* html */ `
 //         <span>Show more</span>
 //         <span class="list__remaining"> (${remaining})</span>
@@ -275,3 +288,4 @@ Module.listCloseBtn.addEventListener('click', () =>{
 // })
 
 
+// to be deleted soon
