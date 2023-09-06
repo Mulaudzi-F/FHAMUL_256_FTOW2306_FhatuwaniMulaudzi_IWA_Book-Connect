@@ -53,8 +53,123 @@ Module.dataListBtn.addEventListener('click', () =>{
     Module.dataListItem.appendChild(fragment) 
     showMore += remaining.length;
     Module.dataListBtn.disabled = !(matches.length - showMore > 0)
+});
+
+// Responsible for show more title
+
+Module.dataListBtn.innerHTML  = /* html */ `
+ <span>show More(
+<span class='list__remaining'>${matches.length - showMore > 0 ? matches.length - showMore : 0}</span>)
+`
+
+//Handle preview click
+
+Module.dataListItem.addEventListener('click', (event)=>{
+    const pathArray = Array.from(event.path || event.composedPath());
+    
+    let active;
+    for (const node of pathArray){ 
+        
+        if(active)break;
+        const previewId = node.dataset?.preview;
+        
+       for (const singleBook of books) { 
+           
+            if(singleBook.id === previewId){
+                active = singleBook;
+                
+                break
+            }
+        }
+    }
+ 
+    if(!active)  return
+      
+        Module.listActive.open = true;
+        Module.listImg.setAttribute('src', active.image);
+        Module.listBlur.style.backgroundImage = `url('${active.image}')`
+        Module.listTitle.textContent = active.title;
+        Module.listSubtitle.textContent = `${authors[active.author]} (${new Date(active.published).getFullYear()})`
+        Module.listDescription.textContent = active.description
+    
 })
 
+
+// List Close 
+Module.listCloseBtn.addEventListener('click', () =>{
+    Module.listActive.open = false
+})
+
+// Search modal show 
+
+Module.searchHeaderBtn.addEventListener('click', () =>{
+    Module.searchOverlay.open = true;
+    //data-search-title.focus()
+}) 
+
+// SEARCH BUTTON
+
+// Search specific book
+
+Module.searchForm.addEventListener('submit', (event) =>{
+    event.preventDefault();
+
+
+    // hide book list
+    Module.dataListItem.style.display = 'none';
+
+     // clear message area
+    Module.listMessage.innerHTML = '';
+      
+    //get form data
+    
+    const formData = new formData(event.target);
+    const title1 = formData.get('title');
+    const genre1 = formData.get('genre');
+    const author1 = formData.get('author'); 
+    
+
+    // Array to store filtered books
+    const filteredBooks = []
+
+    // ooping through  all books
+   for(let i = 0; i < books.length; i++) {
+    const book = books[i] 
+
+    // if genre and author are not selected, filter by title only
+    if (genre1 === 'any' && author1 ==='any') {
+        if(book.title.toLowerCase().includes(title1.toLowerCase())) {
+            filteredBooks.push(book) 
+        }
+    } 
+
+      // if genre is not selected, filter by author and title
+
+   if(genre1 ==='any'){
+    if(book.title.toLowerCase().includes(title1.toLowerCase()) && book.author === author1){
+        filteredBooks.push(book);
+    }
+   }
+
+    // If title is not enterd, filter by author and genre
+
+    if(title1 === '') {
+        if (book.author === author1 && book.genres.includes(genre1)){
+            filteredBooks.push(book);
+        }
+    }
+
+    // If neither title nor author are selected, filter by genre only 
+  if (title1 ==='' && author1 ==='any') {
+    if(book.genres.includes(genre1)) {
+        filteredBooks.push(book)
+    }
+  } 
+
+   }
+  
+
+})
 
 // if (!books && !Array.isArray(books)) throw new Error('Source required') 
 // // if (!range && range.length < 2) throw new Error('Range must be an array with two numbers')
