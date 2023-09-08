@@ -4,7 +4,12 @@ const matches = books
 
 let  page = 1;
 
-
+/**
+ *  This function  return a new button  element that contains cgildren element
+ * that creates a preview of portion of books 
+ *
+ * 
+ */
 
 function createPreview({author, id, image, title}) {
     let element = document.createElement('button');
@@ -25,7 +30,7 @@ function createPreview({author, id, image, title}) {
      return element
 
 }
-
+//--This Is fragment of the first 36 books that will appear on the screen--//
  const fragment1 = document.createDocumentFragment() 
  const extracted = books.slice(0, 36) 
  for (const { author, title, image, id } of extracted) {
@@ -179,7 +184,6 @@ Module.searchForm.addEventListener('submit', (event) =>{
 
    }
   
-       
        //display filtered books
        Module.listMessage.style.display = 'block'  
     
@@ -252,10 +256,7 @@ for (const [id, names] of Object.entries(authors)) {
     element.innerText = names;
     Module.searchAuthor.appendChild(element)
 }
-Module.settingForm.addEventListener('submit', (event) =>{
-    event.preventDefault()
-    action.settings.submit();
-})
+
 
 //closes the preview overlay
 
@@ -263,14 +264,40 @@ Module.listCloseBtn.addEventListener('click', () =>{
     Module.listActive.open = false
 });
 
+//Theme mode
+//Get the settings button and add a click event listener
+Module.settingHeaderBtn.addEventListener('click', (event) =>{
+event.preventDefault();
 
-// const day = {
-//     dark: 'rgb(10, 10, 20)',
-//     light: 'rgb(255, 255, 255)',
-// }
+//Show the theme overlay dialog
+Module.settingOverlay.show();
 
-// const night = {
-//     dark: 'rgb(255, 255, 255)',
-//     light: 'rgb(10, 10, 20)',
-// }
+Module.settingCancelBtn.addEventListener('click', () =>{
+    Module.settingOverlay.close()
+})
 
+}) 
+
+//******   Defines the color values for the day and night themes  ***//
+const css ={
+day:{
+    dark: '10, 10, 20',
+    light: '255, 255, 255',
+},
+
+night:{
+    dark: '255, 255, 255',
+    light: '10, 10, 20',
+}
+
+} 
+
+
+Module.settingForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const theme = Module.settingTheme.value;
+    document.documentElement.style.setProperty('--color-dark', css[theme].dark);
+    document.documentElement.style.setProperty('--color-light', css[theme].light);
+    Module.settingOverlay.close()
+  });
+  
