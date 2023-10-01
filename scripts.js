@@ -137,7 +137,7 @@ Module.searchForm.addEventListener('submit', (event) =>{
     // Array to store filtered books
     const filteredBooks = []
 
-    // ooping through  all books
+    // looping through  all books
    for(let i = 0; i < books.length; i++) {
     const book = books[i] 
 
@@ -147,7 +147,7 @@ Module.searchForm.addEventListener('submit', (event) =>{
             filteredBooks.push(book) 
         }
     } 
-
+ 
       // if genre is not selected, filter by author and title
 
    if(genre1 ==='any'){
@@ -212,6 +212,7 @@ Module.searchForm.addEventListener('submit', (event) =>{
          src="${image}"
             />
         </div>
+        
         <div class="preview__info">
         <dt class="preview__title">${title}</dt>
         <div class="preview__author">${authors[author]}</div>
@@ -278,7 +279,8 @@ Module.settingCancelBtn.addEventListener('click', () =>{
 
 }) 
 
-//******   Defines the color values for the day and night themes  ***//
+//******   Defines the color values for the day and night themes  
+//
 const css ={
 day:{
     dark: '10, 10, 20',
